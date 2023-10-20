@@ -2,6 +2,7 @@
 ## Dima Florin-Alexandru - Grupa 262 - CTI, FMI Unibuc
 
 Titlu: Gestiunea facturilor primite de la furnizori
+
 Descriere: Tinerea unei evidente simple a facturilor
 
 ### Functiile aplicatiei:
