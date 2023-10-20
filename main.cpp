@@ -6,13 +6,17 @@
 
 using namespace std;
 
+
+// Clase
 class Furnizor {
     private:
         string nume;
         string iban;
     public:
         Furnizor(string nume = "", string iban = "");
-        string GetNume();        
+        Furnizor(const Furnizor& other);
+        Furnizor& operator=(Furnizor& other);
+        string GetNume();
         friend istream& operator>>(istream& is, Furnizor& furnizor);
         friend ostream& operator<<(ostream& os, Furnizor& furnizor);
         ~Furnizor();
@@ -26,8 +30,10 @@ class Factura {
         double valoareRamasa;
     public:
         Factura(int id = 0, Furnizor* furnizor = nullptr, double valoare = 0, double valoareRamasa = 0);
+        Factura(const Factura& other);
+        Factura& operator=(Factura& other);
         int GetId();
-        void Achita(double valoare);
+        void Achita(const double valoare);
         Furnizor* GetFurnizor();
         friend istream& operator>>(istream& is, Factura& factura);
         friend ostream& operator<<(ostream& os, Factura& factura);
@@ -41,9 +47,12 @@ class Chitanta {
         double valoare;
     public:
         Chitanta(int id = 0, Factura* factura = nullptr, double valoare = 0);
+        Chitanta(const Chitanta& other);
+        Chitanta& operator=(Chitanta& other);
         Factura* GetFactura();
         friend istream& operator>>(istream& is, Chitanta& chitanta);
         friend ostream& operator<<(ostream& os, Chitanta& chitanta);
+        ~Chitanta();
 };
 
 class Aplicatie {
@@ -53,6 +62,8 @@ class Aplicatie {
         static list<Factura> facturi;
     public:
         Aplicatie() = delete;
+        Aplicatie(const Aplicatie& other) = delete;
+        Aplicatie& operator=(Aplicatie& other);
         static void Init();
         static void ShowOpeningView();
         static void AdaugaFurnizor();
@@ -64,15 +75,19 @@ class Aplicatie {
         static void ShowAdaugaChitantaView();
         static void ShowMainMenuView();
         static void ShowClosingView();
-        static Furnizor* GetFurnizorByNume(string nume);
+        static Furnizor* GetFurnizorByNume(const string nume);
         static int GetNextIdFactura();
-        static Factura* GetFacturaById(int id);
+        static Factura* GetFacturaById(const int id);
         static int GetNextIdChitanta();
+        ~Aplicatie();
 };
 
 list<Furnizor> Aplicatie::furnizori;
 list<Chitanta> Aplicatie::chitante;
 list<Factura> Aplicatie::facturi;
+
+
+// Aplicatie
 
 void Aplicatie::Init() {
     Aplicatie::furnizori.clear();
@@ -197,7 +212,7 @@ void Aplicatie::ShowClosingView() {
     cout << "Aplicatia se inchide..." << endl;
 }
 
-Furnizor* Aplicatie::GetFurnizorByNume(string nume) {
+Furnizor* Aplicatie::GetFurnizorByNume(const string nume) {
     for (list<Furnizor>::iterator it = Aplicatie::furnizori.begin(); it != Aplicatie::furnizori.end(); it++) {
         if (it->GetNume() == nume) {
             return &(*it);
@@ -211,7 +226,7 @@ int Aplicatie::GetNextIdFactura() {
     return Aplicatie::facturi.size() + 1;
 }
 
-Factura* Aplicatie::GetFacturaById(int id) {
+Factura* Aplicatie::GetFacturaById(const int id) {
     for (list<Factura>::iterator it = Aplicatie::facturi.begin(); it != Aplicatie::facturi.end(); it++) {
         if (it->GetId() == id) {
             return &(*it);
@@ -225,9 +240,32 @@ int Aplicatie::GetNextIdChitanta() {
     return Aplicatie::chitante.size() + 1;
 }
 
+Aplicatie& Aplicatie::operator=(Aplicatie& other) {
+    return *this;
+}
+
+Aplicatie::~Aplicatie() { }
+
+
+// Furnizor
+
 Furnizor::Furnizor(string nume, string iban) {
     this->nume = nume;
     this->iban = iban;
+}
+
+Furnizor::Furnizor(const Furnizor& other) {
+    this->nume = other.nume;
+    this->iban = other.iban;
+}
+
+Furnizor& Furnizor::operator=(Furnizor& other) {
+    if (this != &other) {
+        this->nume = other.nume;
+        this->iban = other.iban;
+    }
+
+    return *this;
 }
 
 string Furnizor::GetNume() {
@@ -256,11 +294,32 @@ ostream& operator<<(ostream& os, Furnizor& furnizor) {
 
 Furnizor::~Furnizor() { }
 
+
+// Factura
+
 Factura::Factura(int id, Furnizor* furnizor, double valoare, double valoareRamasa) :
     id(id),
     furnizor(furnizor),
     valoare(valoare),
     valoareRamasa(valoareRamasa) {
+}
+
+Factura::Factura(const Factura& other) {
+    this->id = other.id;
+    this->valoare = other.valoare;
+    this->valoareRamasa = other.valoareRamasa;
+    this->furnizor = other.furnizor;
+}
+
+Factura& Factura::operator=(Factura& other) {
+    if (this != &other) {
+        this->id = other.id;
+        this->valoare = other.valoare;
+        this->valoareRamasa = other.valoareRamasa;
+        this->furnizor = other.furnizor;
+    }
+
+    return *this;
 }
 
 istream& operator>>(istream& is, Factura& factura) {
@@ -297,16 +356,35 @@ int Factura::GetId() {
     return this->id;
 }
 
-void Factura::Achita(double valoare) {
+void Factura::Achita(const double valoare) {
     this->valoareRamasa -= valoare;
 }
 
 Factura::~Factura() { }
 
+
+// Chitanta
+
 Chitanta::Chitanta(int id, Factura* factura, double valoare) :
     id(id),
     factura(factura),
     valoare(valoare) {
+}
+
+Chitanta::Chitanta(const Chitanta& other) {
+    this->id = other.id;
+    this->factura = other.factura;
+    this->valoare = other.valoare;
+}
+
+Chitanta& Chitanta::operator=(Chitanta& other) {
+    if (this != &other) {
+        this->id = other.id;
+        this->factura = other.factura;
+        this->valoare = other.valoare;
+    }
+
+    return *this;
 }
 
 Factura* Chitanta::GetFactura() {
@@ -339,6 +417,11 @@ ostream& operator<<(ostream& os, Chitanta& chitanta) {
 
     return os;
 }
+
+Chitanta::~Chitanta() { }
+
+
+// Main
 
 int main() {
     Aplicatie::Init();
