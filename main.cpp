@@ -23,9 +23,11 @@ class Factura {
         int id;
         Furnizor* furnizor;
         double valoare;
+        double valoareRamasa;
     public:
-        Factura(int id = 0, Furnizor* furnizor = nullptr, double valoare = 0);
+        Factura(int id = 0, Furnizor* furnizor = nullptr, double valoare = 0, double valoareRamasa = 0);
         int GetId();
+        void Achita(double valoare);
         Furnizor* GetFurnizor();
         friend istream& operator>>(istream& is, Factura& factura);
         friend ostream& operator<<(ostream& os, Factura& factura);
@@ -44,22 +46,10 @@ class Chitanta {
         friend ostream& operator<<(ostream& os, Chitanta& chitanta);
 };
 
-class LocDeConsum {
-    private:
-        string nume;
-        string adresa;
-    public:
-        LocDeConsum(string nume, string adresa);
-        void setNume(string value);
-        string getNume();
-        void PrintInfo();
-};
-
 class Aplicatie {
     private:
         static list<Furnizor> furnizori;
         static list<Chitanta> chitante;
-        static list<LocDeConsum> locuriDeConsum;
         static list<Factura> facturi;
     public:
         Aplicatie() = delete;
@@ -82,13 +72,11 @@ class Aplicatie {
 
 list<Furnizor> Aplicatie::furnizori;
 list<Chitanta> Aplicatie::chitante;
-list<LocDeConsum> Aplicatie::locuriDeConsum;
 list<Factura> Aplicatie::facturi;
 
 void Aplicatie::Init() {
     Aplicatie::furnizori.clear();
     Aplicatie::chitante.clear();
-    Aplicatie::locuriDeConsum.clear();
     Aplicatie::facturi.clear();
     Aplicatie::ShowOpeningView();
 }
@@ -124,8 +112,8 @@ void Aplicatie::ShowAdaugaFurnizorView() {
 
 void Aplicatie::ShowListaFacturiView() {
     cout << endl;
-    cout << "Id - Furnizor - Valoare (" << Aplicatie::facturi.size() << (Aplicatie::facturi.size() == 1 ? " inregistrare)" : " inregistrari)") << endl;
-    cout << "- - - - - - - - - - - - - - - - - - - -" << endl;
+    cout << "Id - Furnizor - Valoare - Valoare ramasa (" << Aplicatie::facturi.size() << (Aplicatie::facturi.size() == 1 ? " inregistrare)" : " inregistrari)") << endl;
+    cout << "- - - - - - - - - - - - - - - - - - - - - - - -" << endl;
     for (list<Factura>::iterator it = Aplicatie::facturi.begin(); it != Aplicatie::facturi.end(); it++) {
         cout << (*it);
     }
@@ -143,7 +131,7 @@ void Aplicatie::ShowAdaugaFacturaView() {
 void Aplicatie::ShowListaChitanteView() {
     cout << endl;
     cout << "Id - Furnizor - Factura - Valoare (" << Aplicatie::chitante.size() << (Aplicatie::chitante.size() == 1 ? " inregistrare)" : " inregistrari)") << endl;
-    cout << "- - - - - - - - - - - - - - - - - - - -" << endl;
+    cout << "- - - - - - - - - - - - - - - - - " << endl;
     for (list<Chitanta>::iterator it = Aplicatie::chitante.begin(); it != Aplicatie::chitante.end(); it++) {
         cout << (*it);
     }
@@ -268,10 +256,11 @@ ostream& operator<<(ostream& os, Furnizor& furnizor) {
 
 Furnizor::~Furnizor() { }
 
-Factura::Factura(int id, Furnizor* furnizor, double valoare) :
+Factura::Factura(int id, Furnizor* furnizor, double valoare, double valoareRamasa) :
     id(id),
     furnizor(furnizor),
-    valoare(valoare) {
+    valoare(valoare),
+    valoareRamasa(valoareRamasa) {
 }
 
 istream& operator>>(istream& is, Factura& factura) {
@@ -289,11 +278,13 @@ istream& operator>>(istream& is, Factura& factura) {
     cout << "Valoare = ";
     is >> factura.valoare;
 
+    factura.valoareRamasa = factura.valoare;
+
     return is;
 }
 
 ostream& operator<<(ostream& os, Factura& factura) {
-    os << factura.id << " - " << factura.furnizor->GetNume() << " - " << factura.valoare << endl;
+    os << factura.id << " - " << factura.furnizor->GetNume() << " - " << factura.valoare << " - " << factura.valoareRamasa << endl;
 
     return os;
 }
@@ -304,6 +295,10 @@ Furnizor* Factura::GetFurnizor() {
 
 int Factura::GetId() {
     return this->id;
+}
+
+void Factura::Achita(double valoare) {
+    this->valoareRamasa -= valoare;
 }
 
 Factura::~Factura() { }
@@ -334,6 +329,8 @@ istream& operator>>(istream& is, Chitanta& chitanta) {
     cout << "Valoare = ";
     is >> chitanta.valoare;
 
+    chitanta.factura->Achita(chitanta.valoare);
+
     return is;
 }
 
@@ -341,23 +338,6 @@ ostream& operator<<(ostream& os, Chitanta& chitanta) {
     os << chitanta.id << " - " << chitanta.GetFactura()->GetFurnizor()->GetNume() << " - " << chitanta.GetFactura()->GetId() << " - " << chitanta.valoare << endl;
 
     return os;
-}
-
-LocDeConsum::LocDeConsum(string nume, string adresa) {
-    this->nume = nume;
-    this->adresa = adresa;
-}
-
-void LocDeConsum::setNume(string value) {
-    this->nume = value;
-}
-
-string LocDeConsum::getNume() {
-    return this->nume;
-}
-
-void LocDeConsum::PrintInfo() {
-    cout << "Loc de consum - " << this->nume << " - " << this->adresa << endl;
 }
 
 int main() {
