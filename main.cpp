@@ -66,7 +66,6 @@ class Aplicatie {
         Aplicatie& operator=(Aplicatie& other);
         static void Init();
         static void ShowOpeningView();
-        static void AdaugaFurnizor();
         static void ShowListaFurnizoriView();
         static void ShowAdaugaFurnizorView();
         static void ShowListaFacturiView();
@@ -99,12 +98,6 @@ void Aplicatie::Init() {
 void Aplicatie::ShowOpeningView() {
     cout << "Aplicatia se deschide..." << endl;
     Aplicatie::ShowMainMenuView();
-}
-
-void Aplicatie::AdaugaFurnizor() {
-    Furnizor furnizor;
-    cin >> furnizor;
-    Aplicatie::furnizori.push_back(furnizor);
 }
 
 void Aplicatie::ShowListaFurnizoriView() {
