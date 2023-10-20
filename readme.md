@@ -5,7 +5,7 @@ Titlu: Gestiunea facturilor primite de la furnizori
 
 Descriere: Tinerea unei evidente simple a facturilor
 
-Motivatia alegerii temei: Pentru a pune in aplicare concepte de POO, am considerat relevanta alegerea unei teme practice, precum un program de tinerea evidentei facturilor. Scopul temei este cel de insusire a informatiilor legat de POO, deci nu am insistat pe tratarea erorilor din cauza inputului utilizatorului si am considerat ca ceea ce este introdus de la tastatura va fi adecvat pentru buna functionare a programului. De asemenea, nu am insistat asupra functionalitatilor sau a amanuntelor legate de informatia stocata, ci am pastrat atentia asupra detaliilor de implementare a paradigmei de POO.
+Motivatia alegerii temei: Pentru a pune in aplicare concepte de POO, am considerat relevanta alegerea unei teme practice, precum un program de tinerea evidentei facturilor. Scopul temei este cel de insusire a informatiilor legat de POO, deci nu am insistat pe tratarea erorilor din cauza inputului utilizatorului si am considerat ca ceea ce este introdus de la tastatura va fi adecvat pentru buna functionare a programului. De asemenea, nu am insistat asupra functionalitatilor (cum ar fi persistenta datelor intre mai multe sesiuni de utilizare) sau a amanuntelor legate de informatia stocata, ci am pastrat atentia asupra detaliilor de implementare a paradigmei de POO.
 
 ### Functiile aplicatiei:
 0. Inchide aplicatia
