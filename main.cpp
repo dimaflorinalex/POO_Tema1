@@ -60,11 +60,7 @@ class Aplicatie {
         static list<Furnizor> furnizori;
         static list<Chitanta> chitante;
         static list<Factura> facturi;
-    public:
-        Aplicatie() = delete;
-        Aplicatie(const Aplicatie& other) = delete;
-        Aplicatie& operator=(Aplicatie& other);
-        static void Init();
+
         static void ShowOpeningView();
         static void ShowListaFurnizoriView();
         static void ShowAdaugaFurnizorView();
@@ -74,6 +70,11 @@ class Aplicatie {
         static void ShowAdaugaChitantaView();
         static void ShowMainMenuView();
         static void ShowClosingView();
+    public:
+        Aplicatie() = delete;
+        Aplicatie(const Aplicatie& other) = delete;
+        Aplicatie& operator=(Aplicatie& other);
+        static void Init();
         static Furnizor* GetFurnizorByNume(const string nume);
         static int GetNextIdFactura();
         static Factura* GetFacturaById(const int id);
