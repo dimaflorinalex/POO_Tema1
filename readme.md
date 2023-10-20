@@ -20,12 +20,9 @@ Motivatia alegerii temei: Pentru a pune in aplicare concepte de POO, am consider
 - Exista protectie impotriva optiunilor invalide.
 
 ### Clase
-Aplicatie - Contine doar membri si metode statice, nu este permisa instantierea ei (este o clasa "statica"). Are rolul de a tine starea globala a aplicatiei (are lista de furnizori, facturi, chitante), de a gestiona navigatia si helper pentru gestionarea datelor.
-
-Furnizor - Este de sine statator.
-
-Factura - Trebuie sa aiba asociat un furnizor.
-
-Chitanta - Trebuie sa aiba asociata o factura. In urma adaugarii unei chitante, valoarea ramasa a facturii asociate scade.
+1. Aplicatie - Contine doar membri si metode statice, nu este permisa instantierea ei (este o clasa "statica"). Are rolul de a tine starea globala a aplicatiei (are lista de furnizori, facturi, chitante), de a gestiona navigatia si helper pentru gestionarea datelor.
+2. Furnizor - Este de sine statator.
+3. Factura - Trebuie sa aiba asociat un furnizor.
+4. Chitanta - Trebuie sa aiba asociata o factura. In urma adaugarii unei chitante, valoarea ramasa a facturii asociate scade.
 
 Fiecare clasa are constructor de initializare, constructor de copiere, operator de atribuire, destructor suprascrise si am folosit "const" unde am observat utilitatea.
