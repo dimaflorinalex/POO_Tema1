@@ -25,4 +25,4 @@ Motivatia alegerii temei: Pentru a pune in aplicare concepte de POO, am consider
 3. Factura - Trebuie sa aiba asociat un furnizor.
 4. Chitanta - Trebuie sa aiba asociata o factura. In urma adaugarii unei chitante, valoarea ramasa a facturii asociate scade.
 
-Fiecare clasa are constructor de initializare, constructor de copiere, operator de atribuire, destructor suprascrise si am folosit "const" unde am observat utilitatea.
+Pentru fiecare clasa, unde am observat utilitatea: constructor de initializare, constructor de copiere, operator de atribuire =, destructor, operator << suprascrise, am folosit "const".
